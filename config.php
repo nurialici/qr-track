@@ -13,8 +13,8 @@ define('API_KEY', 'change_me_to_a_random_string'); // Güvenliğiniz için rastg
 define('BASE_URL', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . ($_SERVER['HTTP_HOST'] ?? 'localhost'));
 
 // --- DOKPLOY İÇİN AYARLANMIŞ KESİN YOLLAR ---
-define('DB_PATH',    '/app/db/tuxxin_qr.sqlite');
-define('LOGO_DIR',   '/app/tmp');
+define('DB_PATH',  __DIR__ . '/storage_db/tuxxin_qr.sqlite');
+define('LOGO_DIR', __DIR__ . '/storage_tmp');
 
 define('TIMEZONE',   'Europe/Istanbul'); // Türkiye saat dilimine ayarlandı
 define('THEME_PATH', __DIR__ . '/themes');
