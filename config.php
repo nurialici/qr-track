@@ -14,7 +14,7 @@ define('API_KEY', 'change_me_to_a_random_string');
 // No trailing slash. Examples:
 //   Root install:      'https://yourdomain.com'
 //   Subdir install:    'https://yourdomain.com/qr-track'
-define('BASE_URL',   'https://yourdomain.com');
+define('BASE_URL',   'http://projeler-test-vgorid-ab7efa-192-168-50-63.sslip.io');
 
 // Absolute paths — place OUTSIDE your web root for security
 define('DB_PATH',  __DIR__ . '/storage_db/tuxxin_qr.sqlite');
