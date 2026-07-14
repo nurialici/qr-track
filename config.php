@@ -3,43 +3,34 @@ declare(strict_types=1);
 
 // --- AUTHENTICATION SETTINGS ---
 define('ADMIN_USER', 'admin');
-define('ADMIN_PASS', 'change_me');
+define('ADMIN_PASS', 'change_me'); // Lütfen bu şifreyi değiştirin
 
 // --- API SETTINGS ---
-// Generate a secure random key using the generator on the API Docs page, or run:
-// php -r "echo bin2hex(random_bytes(32));"
-define('API_KEY', 'change_me_to_a_random_string');
+define('API_KEY', 'change_me_to_a_random_string'); // Güvenliğiniz için rastgele bir metin girin
 
 // --- SITE SETTINGS ---
-// No trailing slash. Examples:
-//   Root install:      'https://yourdomain.com'
-//   Subdir install:    'https://yourdomain.com/qr-track'
-define('BASE_URL',   'https://yourdomain.com');
+// Dokploy üzerindeki domaininizi otomatik algılar. Manuel yazmak isterseniz 'https://domaininiz.com' şeklinde de değiştirebilirsiniz.
+define('BASE_URL', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . ($_SERVER['HTTP_HOST'] ?? 'localhost'));
 
-// Absolute paths — place OUTSIDE your web root for security
-define('DB_PATH',    '/home/youruser/db/tuxxin_qr.sqlite');
-define('LOGO_DIR',   '/home/youruser/tmp');
+// --- DOKPLOY İÇİN AYARLANMIŞ KESİN YOLLAR ---
+define('DB_PATH',    '/app/db/tuxxin_qr.sqlite');
+define('LOGO_DIR',   '/app/tmp');
 
-define('TIMEZONE',   'America/New_York');
+define('TIMEZONE',   'Europe/Istanbul'); // Türkiye saat dilimine ayarlandı
 define('THEME_PATH', __DIR__ . '/themes');
 
 // --- NETWORK SETTINGS ---
-// Set true if your server is behind a Cloudflare Tunnel or similar reverse proxy
 define('USE_CLOUDFLARE_TUNNEL', false);
 
 // --- DISABLED QR CODE PAGE ---
-// Where to redirect when a QR code is inactive.
-// Set to a full URL (e.g. 'https://yourdomain.com') or leave '' to show the built-in "Link Inactive" page.
 define('DISABLED_REDIRECT_URL', '');
 
 // --- API RATE THROTTLING ---
-// Limits requests per IP to prevent abuse. Set API_THROTTLE_ENABLED to false to disable.
 define('API_THROTTLE_ENABLED', true);
-define('API_THROTTLE_LIMIT',  60);   // Max requests per window per IP
-define('API_THROTTLE_WINDOW', 60);   // Window size in seconds
+define('API_THROTTLE_LIMIT',  60);   
+define('API_THROTTLE_WINDOW', 60);   
 
 // --- SESSION SETTINGS ---
-// Seconds of inactivity before the admin session expires (default: 2 hours)
 define('SESSION_LIFETIME', 7200);
 
 // =============================================================================
@@ -118,7 +109,6 @@ try {
         FOREIGN KEY(product_uuid) REFERENCES products(uuid)
     )");
 
-    // Migration: add geo columns if missing
     $columns = $db->query("PRAGMA table_info(scans)")->fetchAll(PDO::FETCH_COLUMN, 1);
     if (!in_array('geo_city', $columns)) {
         $db->exec("ALTER TABLE scans ADD COLUMN geo_city TEXT");
